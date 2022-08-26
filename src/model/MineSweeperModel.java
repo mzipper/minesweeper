@@ -165,59 +165,57 @@ public class MineSweeperModel
         cell = board[location.y][location.x];
         if (cell.getRightClickStatus() == RightClickStatus.BLANK)
         {
-            if (cell.getCellStatus() == CellStatus.BOMB)
-            {
-                list.add(cell);
-            }
-            else if (cell.getCellStatus() == CellStatus.NUMBER)
-            {
-                list.add(cell);
-                numSpacesClicked += list.size();
-            }
-            else
-            {
-                Set<Cell> coloredSet = new HashSet<Cell>();
-                Queue<Cell> queue = new LinkedList<Cell>();
+			switch (cell.getCellStatus())
+			{
+			case BOMB:
+				list.add(cell);
+				break;
+			case NUMBER:
+				list.add(cell);
+				numSpacesClicked += list.size();
+				break;
+			case BLANK:
+				Set<Cell> coloredSet = new HashSet<Cell>();
+				Queue<Cell> queue = new LinkedList<Cell>();
 
-                queue.add(cell);
-                coloredSet.add(cell);
+				queue.add(cell);
+				coloredSet.add(cell);
 
-                while (queue.size() != 0)
-                {
-                    cell = queue.poll();
+				while (queue.size() != 0) {
+					cell = queue.poll();
 
-                    if (cell.getRightClickStatus() != RightClickStatus.BLANK) { continue; }
-                    if (!numSpacesclickedSet.contains(cell)) {
-                        list.add(cell);
-                        numSpacesclickedSet.add(cell);
-                    }
-                    
-                    
-                    
-                    if (cell.getCellStatus() == CellStatus.BLANK)
-                    {
-                        int r = cell.getLocation().y;
-                        int c = cell.getLocation().x;
+					if (cell.getRightClickStatus() != RightClickStatus.BLANK) {
+						continue;
+					}
+					if (!numSpacesclickedSet.contains(cell)) {
+						list.add(cell);
+						numSpacesclickedSet.add(cell);
+					}
 
-                        for (int i = 0; i < dr8.length; i++)
-                        {
-                            int row = r + dr8[i];
-                            int col = c + dc8[i];
+					if (cell.getCellStatus() == CellStatus.BLANK) {
+						int r = cell.getLocation().y;
+						int c = cell.getLocation().x;
 
-                            if (row < 0 || col < 0 || row >= rowCount || col >= colCount) { continue; }
+						for (int i = 0; i < dr8.length; i++) {
+							int row = r + dr8[i];
+							int col = c + dc8[i];
 
-                            cell = board[row][col];
+							if (row < 0 || col < 0 || row >= rowCount || col >= colCount) {
+								continue;
+							}
 
-                            if (!coloredSet.contains(cell))
-                            {
-                                coloredSet.add(cell);
-                                queue.add(cell);
-                            }
-                        }
-                    }
-                }
-                numSpacesClicked += list.size();
-            }
+							cell = board[row][col];
+
+							if (!coloredSet.contains(cell)) {
+								coloredSet.add(cell);
+								queue.add(cell);
+							}
+						}
+					}
+				}
+				numSpacesClicked += list.size();
+				break;
+			}
         }
         return list;
     }
