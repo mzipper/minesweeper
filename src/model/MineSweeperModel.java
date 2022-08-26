@@ -79,13 +79,12 @@ public class MineSweeperModel
 
     private void ClearBoard()
     {
-        Cell cell;
 
         for (int i = 0; i < MAXROWCOUNT; i++)
         {
             for (int j = 0; j < MAXCOLCOUNT; j++)
             {
-                cell = board[i][j];
+                Cell cell = board[i][j];
 
                 cell.setCellStatus(CellStatus.BLANK);
                 cell.setNumber(0);
@@ -124,7 +123,6 @@ public class MineSweeperModel
     private void AddNumbers()
     {
 
-        Cell cell;
 
         for (Cell item: listOfBombs)
         {
@@ -140,7 +138,7 @@ public class MineSweeperModel
 
                 if (row < 0 || col < 0 || row >= rowCount || col >= colCount) { continue; }
 
-                cell = board[row][col];
+                Cell cell = board[row][col];
                 if (cell.getCellStatus() != CellStatus.BOMB)
                 {
                     cell.setCellStatus(CellStatus.NUMBER);
@@ -160,9 +158,8 @@ public class MineSweeperModel
     {
         List<Cell> list = new LinkedList<Cell>();
 
-        Cell cell;
 
-        cell = board[location.y][location.x];
+        Cell cell = board[location.y][location.x];
         if (cell.getRightClickStatus() == RightClickStatus.BLANK)
         {
 			switch (cell.getCellStatus())
@@ -224,10 +221,9 @@ public class MineSweeperModel
     public RightClickStatus RightClick(Point location)
     {
 
-        RightClickStatus rCS;
         Cell cell = board[location.y][location.x];
 
-        rCS = cell.getRightClickStatus();
+        RightClickStatus rCS = cell.getRightClickStatus();
 
         if (rCS.equals(RightClickStatus.BLANK)) setNumRemainingBombsFlagged(getNumRemainingBombsFlagged() - 1);
         if (rCS.equals(RightClickStatus.FLAG)) setNumRemainingBombsFlagged(getNumRemainingBombsFlagged() + 1);
