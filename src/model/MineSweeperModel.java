@@ -124,11 +124,11 @@ public class MineSweeperModel
     {
 
 
-        for (Cell item: listOfBombs)
+        for (Cell bombCell: listOfBombs)
         {
 
-            int r = item.getLocation().y;
-            int c = item.getLocation().x;
+            int r = bombCell.getLocation().y;
+            int c = bombCell.getLocation().x;
 
             for (int i = 0; i < dr8.length; i++)
             {
@@ -159,27 +159,27 @@ public class MineSweeperModel
         List<Cell> list = new LinkedList<Cell>();
 
 
-        Cell cell = board[location.y][location.x];
-        if (cell.getRightClickStatus() == RightClickStatus.BLANK)
+        Cell clickedCell = board[location.y][location.x];
+        if (clickedCell.getRightClickStatus() == RightClickStatus.BLANK)
         {
-			switch (cell.getCellStatus())
+			switch (clickedCell.getCellStatus())
 			{
 			case BOMB:
-				list.add(cell);
+				list.add(clickedCell);
 				break;
 			case NUMBER:
-				list.add(cell);
+				list.add(clickedCell);
 				numSpacesClicked += list.size();
 				break;
 			case BLANK:
 				Set<Cell> coloredSet = new HashSet<Cell>();
 				Queue<Cell> queue = new LinkedList<Cell>();
 
-				queue.add(cell);
-				coloredSet.add(cell);
+				queue.add(clickedCell);
+				coloredSet.add(clickedCell);
 
 				while (queue.size() != 0) {
-					cell = queue.poll();
+					Cell cell = queue.poll();
 
 					if (cell.getRightClickStatus() != RightClickStatus.BLANK) {
 						continue;
@@ -221,17 +221,17 @@ public class MineSweeperModel
     public RightClickStatus RightClick(Point location)
     {
 
-        Cell cell = board[location.y][location.x];
+        Cell cellRightClicked = board[location.y][location.x];
 
-        RightClickStatus rCS = cell.getRightClickStatus();
+        RightClickStatus rightClickStatus = cellRightClicked.getRightClickStatus();
 
-        if (rCS.equals(RightClickStatus.BLANK)) setNumRemainingBombsFlagged(getNumRemainingBombsFlagged() - 1);
-        if (rCS.equals(RightClickStatus.FLAG)) setNumRemainingBombsFlagged(getNumRemainingBombsFlagged() + 1);
+        if (rightClickStatus.equals(RightClickStatus.BLANK)) setNumRemainingBombsFlagged(getNumRemainingBombsFlagged() - 1);
+        if (rightClickStatus.equals(RightClickStatus.FLAG)) setNumRemainingBombsFlagged(getNumRemainingBombsFlagged() + 1);
         
-        rCS = RightClickStatus.intToEnum( (rCS.getNum() + 1) % numOfRightClickOptions );
-        cell.setRightClickStatus(rCS);
+        rightClickStatus = RightClickStatus.intToEnum( (rightClickStatus.getNum() + 1) % numOfRightClickOptions );
+        cellRightClicked.setRightClickStatus(rightClickStatus);
 
-        return rCS;
+        return rightClickStatus;
     }
 
 
