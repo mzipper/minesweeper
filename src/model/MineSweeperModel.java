@@ -47,7 +47,6 @@ public class MineSweeperModel
     public void SetupNewBoard(GameLevel gameLevel)
     {
 
-        ClearBoard();
 
         switch (gameLevel)
         {
@@ -79,13 +78,12 @@ public class MineSweeperModel
 
     private void ClearBoard()
     {
-        Cell cell;
 
         for (int i = 0; i < MAXROWCOUNT; i++)
         {
             for (int j = 0; j < MAXCOLCOUNT; j++)
             {
-                cell = board[i][j];
+                Cell cell = board[i][j];
 
                 cell.setCellStatus(CellStatus.BLANK);
                 cell.setNumber(0);
@@ -124,13 +122,12 @@ public class MineSweeperModel
     private void AddNumbers()
     {
 
-        Cell cell;
 
-        for (Cell item: listOfBombs)
+        for (Cell bombCell: listOfBombs)
         {
 
-            int r = item.getLocation().y;
-            int c = item.getLocation().x;
+            int r = bombCell.getLocation().y;
+            int c = bombCell.getLocation().x;
 
             for (int i = 0; i < dr8.length; i++)
             {
@@ -140,7 +137,7 @@ public class MineSweeperModel
 
                 if (row < 0 || col < 0 || row >= rowCount || col >= colCount) { continue; }
 
-                cell = board[row][col];
+                Cell cell = board[row][col];
                 if (cell.getCellStatus() != CellStatus.BOMB)
                 {
                     cell.setCellStatus(CellStatus.NUMBER);
@@ -160,64 +157,61 @@ public class MineSweeperModel
     {
         List<Cell> list = new LinkedList<Cell>();
 
-        Cell cell;
 
-        cell = board[location.y][location.x];
-        if (cell.getRightClickStatus() == RightClickStatus.BLANK)
+        Cell clickedCell = board[location.y][location.x];
+        if (clickedCell.getRightClickStatus() == RightClickStatus.BLANK)
         {
-            if (cell.getCellStatus() == CellStatus.BOMB)
-            {
-                list.add(cell);
-            }
-            else if (cell.getCellStatus() == CellStatus.NUMBER)
-            {
-                list.add(cell);
-                numSpacesClicked += list.size();
-            }
-            else
-            {
-                Set<Cell> coloredSet = new HashSet<Cell>();
-                Queue<Cell> queue = new LinkedList<Cell>();
+			switch (clickedCell.getCellStatus())
+			{
+			case BOMB:
+				list.add(clickedCell);
+				break;
+			case NUMBER:
+				list.add(clickedCell);
+				numSpacesClicked += list.size();
+				break;
+			case BLANK:
+				Set<Cell> coloredSet = new HashSet<Cell>();
+				Queue<Cell> queue = new LinkedList<Cell>();
 
-                queue.add(cell);
-                coloredSet.add(cell);
+				queue.add(clickedCell);
+				coloredSet.add(clickedCell);
 
-                while (queue.size() != 0)
-                {
-                    cell = queue.poll();
+				while (queue.size() != 0) {
+					Cell cell = queue.poll();
 
-                    if (cell.getRightClickStatus() != RightClickStatus.BLANK) { continue; }
-                    if (!numSpacesclickedSet.contains(cell)) {
-                        list.add(cell);
-                        numSpacesclickedSet.add(cell);
-                    }
-                    
-                    
-                    
-                    if (cell.getCellStatus() == CellStatus.BLANK)
-                    {
-                        int r = cell.getLocation().y;
-                        int c = cell.getLocation().x;
+					if (cell.getRightClickStatus() != RightClickStatus.BLANK) {
+						continue;
+					}
+					if (!numSpacesclickedSet.contains(cell)) {
+						list.add(cell);
+						numSpacesclickedSet.add(cell);
+					}
 
-                        for (int i = 0; i < dr8.length; i++)
-                        {
-                            int row = r + dr8[i];
-                            int col = c + dc8[i];
+					if (cell.getCellStatus() == CellStatus.BLANK) {
+						int r = cell.getLocation().y;
+						int c = cell.getLocation().x;
 
-                            if (row < 0 || col < 0 || row >= rowCount || col >= colCount) { continue; }
+						for (int i = 0; i < dr8.length; i++) {
+							int row = r + dr8[i];
+							int col = c + dc8[i];
 
-                            cell = board[row][col];
+							if (row < 0 || col < 0 || row >= rowCount || col >= colCount) {
+								continue;
+							}
 
-                            if (!coloredSet.contains(cell))
-                            {
-                                coloredSet.add(cell);
-                                queue.add(cell);
-                            }
-                        }
-                    }
-                }
-                numSpacesClicked += list.size();
-            }
+							cell = board[row][col];
+
+							if (!coloredSet.contains(cell)) {
+								coloredSet.add(cell);
+								queue.add(cell);
+							}
+						}
+					}
+				}
+				numSpacesClicked += list.size();
+				break;
+			}
         }
         return list;
     }
@@ -226,18 +220,17 @@ public class MineSweeperModel
     public RightClickStatus RightClick(Point location)
     {
 
-        RightClickStatus rCS;
-        Cell cell = board[location.y][location.x];
+        Cell cellRightClicked = board[location.y][location.x];
 
-        rCS = cell.getRightClickStatus();
+        RightClickStatus rightClickStatus = cellRightClicked.getRightClickStatus();
 
-        if (rCS.equals(RightClickStatus.BLANK)) setNumRemainingBombsFlagged(getNumRemainingBombsFlagged() - 1);
-        if (rCS.equals(RightClickStatus.FLAG)) setNumRemainingBombsFlagged(getNumRemainingBombsFlagged() + 1);
+        if (rightClickStatus.equals(RightClickStatus.BLANK)) setNumRemainingBombsFlagged(getNumRemainingBombsFlagged() - 1);
+        if (rightClickStatus.equals(RightClickStatus.FLAG)) setNumRemainingBombsFlagged(getNumRemainingBombsFlagged() + 1);
         
-        rCS = RightClickStatus.intToEnum( (rCS.getNum() + 1) % numOfRightClickOptions );
-        cell.setRightClickStatus(rCS);
+        rightClickStatus = RightClickStatus.intToEnum( (rightClickStatus.getNum() + 1) % numOfRightClickOptions );
+        cellRightClicked.setRightClickStatus(rightClickStatus);
 
-        return rCS;
+        return rightClickStatus;
     }
 
 
