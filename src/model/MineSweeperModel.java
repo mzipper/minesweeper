@@ -47,7 +47,6 @@ public class MineSweeperModel
     public void SetupNewBoard(GameLevel gameLevel)
     {
 
-        ClearBoard();
 
         switch (gameLevel)
         {
