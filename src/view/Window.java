@@ -11,7 +11,6 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.Cell;
@@ -37,10 +36,10 @@ public class Window extends JFrame {
     public TagJButton[][] buttons;
     
     
-    public JPanel flagCountPanel;
+    public FlagCountPanel flagCountPanel;
     public JPanel boardPanel;
-    public JLabel flagLabel;
-    public JLabel flagCountLabel;
+
+	public IntListener intListener;
     
     
     public Window() {
@@ -112,12 +111,15 @@ public class Window extends JFrame {
 		
 		setLayout(new BorderLayout());
 		
-		flagCountPanel = new JPanel();
-		flagCountLabel = new JLabel();
-		flagCountLabel.setText(Integer.toString(numberofBombs));
-		flagLabel = new JLabel(FLAG);
-		flagCountPanel.add(flagLabel);
-		flagCountPanel.add(flagCountLabel);
+		flagCountPanel = new FlagCountPanel(numberofBombs);
+		
+		intListener = new IntListener() {
+			
+			@Override
+			public void numberEmitted(int number) {
+				flagCountPanel.flagCountLabel.setText(Integer.toString(number));
+			}
+		};
 		
 		add(flagCountPanel, BorderLayout.NORTH);
 		add(boardPanel, BorderLayout.CENTER);
@@ -323,7 +325,7 @@ class MouseClicked extends MouseAdapter {
                         button.setBackground(Color.LIGHT_GRAY);
                         button.setForeground(Color.BLACK);
 
-                        flagCountLabel.setText(Integer.toString(mineSweeperModel.getNumRemainingBombsFlagged()));
+                        intListener.numberEmitted(mineSweeperModel.getNumRemainingBombsFlagged());
 
                         break;
                     case FLAG:
@@ -331,7 +333,7 @@ class MouseClicked extends MouseAdapter {
                         button.setBackground(Color.ORANGE.brighter());
                         button.setForeground(Color.RED);
 
-                        flagCountLabel.setText(Integer.toString(mineSweeperModel.getNumRemainingBombsFlagged()));
+                        intListener.numberEmitted(mineSweeperModel.getNumRemainingBombsFlagged());
 
                         break;
                     case QMARK:
