@@ -41,6 +41,9 @@ public class Window extends JFrame {
 
 	public IntListener intListener;
     
+	private static final String FLAG = "\uD83D\uDEA9";
+	private static final String BOMB = "\uD83D\uDCA3";
+	private static final String QMARK = "?";
     
     public Window() {
     	
@@ -220,9 +223,6 @@ private void Test_ViewBoard()
         }
 }
 
-private static final String FLAG = "\uD83D\uDEA9";
-private static final String BOMB = "\uD83D\uDCA3";
-private static final String QMARK = "?";
 
 class MouseClicked extends MouseAdapter {
 	@Override
