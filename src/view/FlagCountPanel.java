@@ -8,13 +8,12 @@ public class FlagCountPanel extends JPanel {
     public JLabel flagLabel;
     public JLabel flagCountLabel;
     
-    private static final String FLAG = "\uD83D\uDEA9";
     
 	public FlagCountPanel(int numberofBombs) {
 		
 		flagCountLabel = new JLabel();
 		flagCountLabel.setText(Integer.toString(numberofBombs));
-		flagLabel = new JLabel(FLAG);
+		flagLabel = new JLabel(Icon.FLAG);
 		add(flagLabel);
 		add(flagCountLabel);
 	}

@@ -35,9 +35,6 @@ public class BoardPanel extends JPanel {
     
     public IntListener intListener;
     
-	private static final String FLAG = "\uD83D\uDEA9";
-	private static final String BOMB = "\uD83D\uDCA3";
-	private static final String QMARK = "?";
     
 	
 	public BoardPanel(IntListener intListener) {
@@ -173,7 +170,7 @@ private void Test_ViewBoard()
 
                     break;
                 case BOMB:
-                    b.setText(BOMB);
+                    b.setText(Icon.BOMB);
 
                     break;
 
@@ -208,13 +205,13 @@ class MouseClicked extends MouseAdapter {
                     if (cell.getCellStatus() == CellStatus.BOMB)
                     {
                         
-                        cellButton.setText(BOMB);
+                        cellButton.setText(Icon.BOMB);
                         System.err.println("GAME OVER. Lost...");
 
                         for (Cell bombCell : mineSweeperModel.getListOfBombs())
                         {
                             buttons[bombCell.getLocation().y][bombCell.getLocation().x].setBackground(Color.RED);
-                            buttons[bombCell.getLocation().y][bombCell.getLocation().x].setText(BOMB);
+                            buttons[bombCell.getLocation().y][bombCell.getLocation().x].setText(Icon.BOMB);
                             buttons[bombCell.getLocation().y][bombCell.getLocation().x].setEnabled(false);
                             buttons[bombCell.getLocation().y][bombCell.getLocation().x].removeMouseListener(this);
                         }
@@ -260,7 +257,7 @@ class MouseClicked extends MouseAdapter {
                         for (Cell bombCell : mineSweeperModel.getListOfBombs())
                         {
                             buttons[bombCell.getLocation().y][bombCell.getLocation().x].setBackground(Color.YELLOW);
-                            buttons[bombCell.getLocation().y][bombCell.getLocation().x].setText(BOMB);
+                            buttons[bombCell.getLocation().y][bombCell.getLocation().x].setText(Icon.BOMB);
                             
                             buttons[bombCell.getLocation().y][bombCell.getLocation().x].setEnabled(false);
                             buttons[bombCell.getLocation().y][bombCell.getLocation().x].removeMouseListener(this);
@@ -292,7 +289,7 @@ class MouseClicked extends MouseAdapter {
 
                         break;
                     case FLAG:
-                        button.setText(FLAG);
+                        button.setText(Icon.FLAG);
                         button.setBackground(Color.ORANGE.brighter());
                         button.setForeground(Color.RED);
 
@@ -300,7 +297,7 @@ class MouseClicked extends MouseAdapter {
 
                         break;
                     case QMARK:
-                        button.setText(QMARK);
+                        button.setText(Icon.QMARK);
                         button.setBackground(Color.GREEN.brighter());
                         button.setForeground(Color.GREEN.darker());
                         break;
