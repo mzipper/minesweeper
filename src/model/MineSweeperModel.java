@@ -90,7 +90,10 @@ public class MineSweeperModel
                 cell.setRightClickStatus(RightClickStatus.BLANK);
             }
         }
-                
+        listOfBombs.clear();
+        numRemainingBombsFlagged = 0;
+        numSpacesClicked = 0;
+        numSpacesclickedSet.clear();
     }
 
 	private void AddBombs()
