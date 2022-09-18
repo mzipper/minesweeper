@@ -36,6 +36,7 @@ public class BoardPanel extends JPanel {
     public IntListener intListener;
     
     
+    MouseListener mouseListener;
 	
 	public BoardPanel(IntListener intListener) {
 		this.intListener = intListener;
@@ -68,7 +69,7 @@ public class BoardPanel extends JPanel {
 		
 		buttons = new TagJButton[rowCount][colCount];
 		
-		MouseListener mouseListener = new MouseClicked();
+		mouseListener = new MouseClicked();
 		
 		setLayout(new GridLayout(rowCount, colCount));
 		
@@ -183,6 +184,16 @@ private void Test_ViewBoard()
         }
 }
 
+public void resetBoard() {
+	for (int i = 0; i < rowCount; i++)
+		for (int j = 0; j < colCount; j++) {
+			buttons[i][j].setEnabled(true);
+			buttons[i][j].addMouseListener(mouseListener);
+			buttons[i][j].setText("");
+			buttons[i][j].setForeground(Color.BLACK);
+			buttons[i][j].setBackground(Color.LIGHT_GRAY);
+		}
+}
 
 class MouseClicked extends MouseAdapter {
 	@Override
