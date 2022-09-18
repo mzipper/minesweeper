@@ -30,8 +30,8 @@ public class Window extends JFrame {
 		setJMenuBar(new TheMenuBar(new NewgameListener() {
 			@Override
 			public void newgame() {
-				boardPanel.mineSweeperModel.ClearBoard();
-				boardPanel.mineSweeperModel.SetupNewBoard(GameLevel.EASY);
+				boardPanel.mineSweeperModel.clearBoard();
+				boardPanel.mineSweeperModel.setupNewBoard(GameLevel.EASY);
 				boardPanel.resetBoard();
 			}
 		}));
