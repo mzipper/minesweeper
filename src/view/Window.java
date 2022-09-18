@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
+import model.GameLevel;
+
 public class Window extends JFrame {
     
     public FlagCountPanel flagCountPanel;
@@ -24,6 +26,15 @@ public class Window extends JFrame {
 	}
 
 	private void initializeComponents() {
+		
+		setJMenuBar(new TheMenuBar(new NewgameListener() {
+			@Override
+			public void newgame() {
+				boardPanel.mineSweeperModel.ClearBoard();
+				boardPanel.mineSweeperModel.SetupNewBoard(GameLevel.EASY);
+				boardPanel.resetBoard();
+			}
+		}));
 		
 		boardPanel = new BoardPanel(new IntListener() {
 			@Override

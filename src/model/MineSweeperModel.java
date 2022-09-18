@@ -76,7 +76,7 @@ public class MineSweeperModel
         AddNumbers();
     }
 
-    private void ClearBoard()
+    public void ClearBoard()
     {
 
         for (int i = 0; i < MAXROWCOUNT; i++)
@@ -90,7 +90,10 @@ public class MineSweeperModel
                 cell.setRightClickStatus(RightClickStatus.BLANK);
             }
         }
-                
+        listOfBombs.clear();
+        numRemainingBombsFlagged = 0;
+        numSpacesClicked = 0;
+        numSpacesclickedSet.clear();
     }
 
 	private void AddBombs()
