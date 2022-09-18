@@ -87,7 +87,7 @@ public class BoardPanel extends JPanel {
 		mineSweeperModel = new MineSweeperModel();
 		
 		
-		mineSweeperModel.SetupNewBoard(boardGameLevel);
+		mineSweeperModel.setupNewBoard(boardGameLevel);
 		
 		//Test_ViewBoard();
 	}
@@ -149,7 +149,7 @@ class TagJButton<T> extends JButton {
 	}
 }
 
-private void Test_ViewBoard()
+private void test_ViewBoard()
 {
 
     Cell cell;
@@ -205,7 +205,7 @@ class MouseClicked extends MouseAdapter {
 			System.err.println(p);
 			System.err.println("Left-click on button");
 			
-			List<Cell> cells = mineSweeperModel.LeftClick(p);
+			List<Cell> cells = mineSweeperModel.leftClick(p);
 			
 			for (Cell cell : cells)
             {
@@ -260,7 +260,7 @@ class MouseClicked extends MouseAdapter {
                     
                     cellButton.setEnabled(false);
                     cellButton.removeMouseListener(this);
-                    if (mineSweeperModel.IsGameWon())
+                    if (mineSweeperModel.isGameWon())
                     {
                         
                         System.err.println("YOU WON!");
@@ -287,7 +287,7 @@ class MouseClicked extends MouseAdapter {
             
 			System.err.println(p);
 			System.err.println("Right-click on button");
-			RightClickStatus rightClickStatus = mineSweeperModel.RightClick(p);
+			RightClickStatus rightClickStatus = mineSweeperModel.rightClick(p);
 
                 switch (rightClickStatus)
                 {

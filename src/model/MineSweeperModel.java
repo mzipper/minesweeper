@@ -44,7 +44,7 @@ public class MineSweeperModel
     }
 
 
-    public void SetupNewBoard(GameLevel gameLevel)
+    public void setupNewBoard(GameLevel gameLevel)
     {
 
 
@@ -72,11 +72,11 @@ public class MineSweeperModel
         setNumRemainingBombsFlagged(numberofBombs);
 
         
-		AddBombs();
-        AddNumbers();
+		addBombs();
+        addNumbers();
     }
 
-    public void ClearBoard()
+    public void clearBoard()
     {
 
         for (int i = 0; i < MAXROWCOUNT; i++)
@@ -96,7 +96,7 @@ public class MineSweeperModel
         numSpacesclickedSet.clear();
     }
 
-	private void AddBombs()
+	private void addBombs()
     {
 
         Random random = new Random();
@@ -122,7 +122,7 @@ public class MineSweeperModel
         System.err.printf("num of bombs: %d", numOfPlacedBombs);
     }
 
-    private void AddNumbers()
+    private void addNumbers()
     {
 
 
@@ -151,12 +151,12 @@ public class MineSweeperModel
         }
     }
 
-    public boolean IsGameWon()
+    public boolean isGameWon()
     {
         return numSpacesClicked + numberofBombs == rowCount * colCount;
     }
 
-    public List<Cell> LeftClick(Point location)
+    public List<Cell> leftClick(Point location)
     {
         List<Cell> list = new LinkedList<Cell>();
 
@@ -220,7 +220,7 @@ public class MineSweeperModel
     }
     
     
-    public RightClickStatus RightClick(Point location)
+    public RightClickStatus rightClick(Point location)
     {
 
         Cell cellRightClicked = board[location.y][location.x];
