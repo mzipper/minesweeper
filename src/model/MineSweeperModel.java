@@ -76,7 +76,7 @@ public class MineSweeperModel
         AddNumbers();
     }
 
-    private void ClearBoard()
+    public void ClearBoard()
     {
 
         for (int i = 0; i < MAXROWCOUNT; i++)
