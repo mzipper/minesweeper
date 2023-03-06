@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import model.Cell;
 import model.CellStatus;
+import model.EasyLevel;
 import model.GameLevel;
 import model.MineSweeperModel;
 import model.RightClickStatus;
@@ -87,7 +88,7 @@ public class BoardPanel extends JPanel {
 		mineSweeperModel = new MineSweeperModel();
 		
 		
-		mineSweeperModel.setupNewBoard(boardGameLevel);
+		mineSweeperModel.setupNewBoard(new EasyLevel());
 		
 		//Test_ViewBoard();
 	}

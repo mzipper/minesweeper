@@ -44,30 +44,11 @@ public class MineSweeperModel
     }
 
 
-    public void setupNewBoard(GameLevel gameLevel)
+    public void setupNewBoard(IGameLevel gameLevel)
     {
-
-
-        switch (gameLevel)
-        {
-            case EASY:
-                numberofBombs = 10;
-                rowCount = 8;
-                colCount = 10;
-                break;
-
-            case MEDIUM:
-                numberofBombs = 40;
-                rowCount = 14;
-                colCount = 18;
-                break;
-
-            case HARD:
-                numberofBombs = 99;
-                rowCount = 20;
-                colCount = 24;
-                break;
-        }
+    	numberofBombs = gameLevel.getNumberOfBombs();
+    	rowCount = gameLevel.getRowCount();
+    	colCount = gameLevel.getColCount();
 
         setNumRemainingBombsFlagged(numberofBombs);
 

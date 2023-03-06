@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
+import model.EasyLevel;
 import model.GameLevel;
 
 public class Window extends JFrame {
@@ -31,7 +32,7 @@ public class Window extends JFrame {
 			@Override
 			public void newgame() {
 				boardPanel.mineSweeperModel.clearBoard();
-				boardPanel.mineSweeperModel.setupNewBoard(GameLevel.EASY);
+				boardPanel.mineSweeperModel.setupNewBoard(new EasyLevel());
 				boardPanel.resetBoard();
 			}
 		}));
