@@ -15,6 +15,7 @@ public class Window extends JFrame {
     public BoardPanel boardPanel;
 
 	private int numberofBombs = 10;
+	GameLevelFactory gameLevelFactory = new GameLevelFactory();
 
     public Window() {
 		initializeComponents();
@@ -34,20 +35,19 @@ public class Window extends JFrame {
 			@Override
 			public void newgame() {
 				boardPanel.mineSweeperModel.clearBoard();
-				GameLevelFactory gameLevelFactory = new GameLevelFactory();
 				IGameLevel iGameLevel = gameLevelFactory.createGameLevel(GameLevel.EASY);
 				boardPanel.mineSweeperModel.setupNewBoard(iGameLevel);
 				boardPanel.resetBoard();
 			}
 		}));
-		
+
 		boardPanel = new BoardPanel(new IntListener() {
 			@Override
 			public void numberEmitted(int number) {
 				flagCountPanel.flagCountLabel.setText(Integer.toString(number));
 			}
-		});
 		flagCountPanel = new FlagCountPanel(numberofBombs);
+		}, gameLevelFactory.createGameLevel(GameLevel.EASY));
 		
 		setLayout(new BorderLayout());
 		

@@ -11,23 +11,15 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import model.Cell;
-import model.CellStatus;
-import model.EasyLevel;
-import model.GameLevel;
-import model.MineSweeperModel;
-import model.RightClickStatus;
+import model.*;
 
 public class BoardPanel extends JPanel {
 	
 	public MineSweeperModel mineSweeperModel;
 	
-    public int rowCount = 8;
-    public int colCount = 10;
 
-    public int numberofBombs = 10;
 
-    public GameLevel boardGameLevel;
+    public IGameLevel boardIGameLevel;
 
     public boolean isGameStarted = false;
     
@@ -39,43 +31,20 @@ public class BoardPanel extends JPanel {
     
     MouseListener mouseListener;
 	
-	public BoardPanel(IntListener intListener) {
+	public BoardPanel(IntListener intListener, IGameLevel iGameLevel) {
 		this.intListener = intListener;
-		
-		GameLevel gameLevel = GameLevel.EASY;
-		
-		boardGameLevel = gameLevel;
 
-        switch (gameLevel)
-        {
-            case EASY:
-                numberofBombs = 10;
-                rowCount = 8;
-                colCount = 10;
-                break;
-
-            case MEDIUM:
-                numberofBombs = 40;
-                rowCount = 14;
-                colCount = 18;
-                break;
-
-            case HARD:
-                numberofBombs = 99;
-                rowCount = 20;
-                colCount = 24;
-                break;
-        }
+        boardIGameLevel = iGameLevel;
 		
 		
-		buttons = new TagJButton[rowCount][colCount];
+		buttons = new TagJButton[boardIGameLevel.getRowCount()][boardIGameLevel.getColCount()];
 		
 		mouseListener = new MouseClicked();
 		
-		setLayout(new GridLayout(rowCount, colCount));
+		setLayout(new GridLayout(boardIGameLevel.getRowCount(), boardIGameLevel.getColCount()));
 		
-		for (int i = 0; i < rowCount; i++)
-			for (int j = 0; j < colCount; j++) {
+		for (int i = 0; i < boardIGameLevel.getRowCount(); i++)
+			for (int j = 0; j < boardIGameLevel.getColCount(); j++) {
 				buttons[i][j] = new TagJButton(new Point(j, i));
 				(buttons[i][j]).addMouseListener(mouseListener);
 				
@@ -88,7 +57,7 @@ public class BoardPanel extends JPanel {
 		mineSweeperModel = new MineSweeperModel();
 		
 		
-		mineSweeperModel.setupNewBoard(new EasyLevel());
+		mineSweeperModel.setupNewBoard(boardIGameLevel);
 		
 		//Test_ViewBoard();
 	}
@@ -96,35 +65,23 @@ public class BoardPanel extends JPanel {
 	
 
 	public int getRowCount() {
-		return rowCount;
+		return boardIGameLevel.getRowCount();
 	}
 
-	public void setRowCount(int rowCount) {
-		this.rowCount = rowCount;
-	}
 
 	public int getColCount() {
-		return colCount;
+		return boardIGameLevel.getColCount();
 	}
 
-	public void setColCount(int colCount) {
-		this.colCount = colCount;
-	}
 
 	public int getNumberofBombs() {
-		return numberofBombs;
+		return boardIGameLevel.getNumberOfBombs();
 	}
 
-	public void setNumberofBombs(int numberofBombs) {
-		this.numberofBombs = numberofBombs;
-	}
 
-	public GameLevel getBoardGameLevel() {
-		return boardGameLevel;
-	}
 
-	public void setBoardGameLevel(GameLevel boardGameLevel) {
-		this.boardGameLevel = boardGameLevel;
+	public IGameLevel getBoardGameLevel() {
+		return boardIGameLevel;
 	}
 
 	public Boolean getIsGameStarted() {
@@ -156,8 +113,8 @@ private void test_ViewBoard()
     Cell cell;
     CellStatus cStatus;
 
-    for (int i = 0; i < rowCount; i++)
-        for (int j = 0; j < colCount; j++)
+    for (int i = 0; i < boardIGameLevel.getRowCount(); i++)
+        for (int j = 0; j < boardIGameLevel.getColCount(); j++)
         {
             Cell board[][] = mineSweeperModel.getBoard();
         	cell = board[i][j];
@@ -186,8 +143,8 @@ private void test_ViewBoard()
 }
 
 public void resetBoard() {
-	for (int i = 0; i < rowCount; i++)
-		for (int j = 0; j < colCount; j++) {
+	for (int i = 0; i < boardIGameLevel.getRowCount(); i++)
+		for (int j = 0; j < boardIGameLevel.getColCount(); j++) {
 			buttons[i][j].setEnabled(true);
 			buttons[i][j].addMouseListener(mouseListener);
 			buttons[i][j].setText("");
@@ -228,8 +185,8 @@ class MouseClicked extends MouseAdapter {
                             buttons[bombCell.getLocation().y][bombCell.getLocation().x].removeMouseListener(this);
                         }
 
-                        for (int i = 0; i < rowCount; i++)
-                            for (int j = 0; j < colCount; j++) {
+                        for (int i = 0; i < boardIGameLevel.getRowCount(); i++)
+                            for (int j = 0; j < boardIGameLevel.getColCount(); j++) {
                             	buttons[i][j].setEnabled(false);
                             	buttons[i][j].removeMouseListener(this);
                             }
