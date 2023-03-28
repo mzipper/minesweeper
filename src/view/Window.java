@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 
 import model.EasyLevel;
 import model.GameLevel;
+import model.GameLevelFactory;
+import model.IGameLevel;
 
 public class Window extends JFrame {
     
@@ -32,7 +34,9 @@ public class Window extends JFrame {
 			@Override
 			public void newgame() {
 				boardPanel.mineSweeperModel.clearBoard();
-				boardPanel.mineSweeperModel.setupNewBoard(new EasyLevel());
+				GameLevelFactory gameLevelFactory = new GameLevelFactory();
+				IGameLevel iGameLevel = gameLevelFactory.createGameLevel(GameLevel.EASY);
+				boardPanel.mineSweeperModel.setupNewBoard(iGameLevel);
 				boardPanel.resetBoard();
 			}
 		}));
