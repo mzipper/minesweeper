@@ -14,7 +14,6 @@ public class Window extends JFrame {
     public FlagCountPanel flagCountPanel;
     public BoardPanel boardPanel;
 
-	private int numberofBombs = 10;
 	GameLevelFactory gameLevelFactory = new GameLevelFactory();
 
     public Window() {
@@ -46,8 +45,8 @@ public class Window extends JFrame {
 			public void numberEmitted(int number) {
 				flagCountPanel.flagCountLabel.setText(Integer.toString(number));
 			}
-		flagCountPanel = new FlagCountPanel(numberofBombs);
 		}, gameLevelFactory.createGameLevel(GameLevel.EASY));
+		flagCountPanel = new FlagCountPanel(gameLevelFactory.createGameLevel(GameLevel.EASY).getNumberOfBombs());
 		
 		setLayout(new BorderLayout());
 		
